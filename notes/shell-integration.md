@@ -48,10 +48,21 @@ diverge on trusting it vs. reading the OS process cwd — spectrum
 **Ghostty (shell-only) → WezTerm → Kitty → tmux (process-only)**. iTerm2 OSC 1337
 `CurrentDir` is an alternate carrier (Ghostty honors it; WezTerm ignores it).
 
+### Who emits the markers (shell hook mechanics)
+Traced in `../experiments/006-shell-emitters/`. The terminal doesn't emit these —
+the shell does, via integration scripts each terminal ships:
+- **bash**: `PROMPT_COMMAND` (precmd → A/D/OSC 7) + `PS0` (preexec → C); older
+  bash uses a bundled `bash-preexec.sh` (DEBUG trap).
+- **zsh**: `precmd_functions` / `preexec_functions` arrays.
+- **fish**: `fish_prompt` / `fish_preexec` / `fish_postexec` events.
+
+Exit code is captured as the first statement of precmd (`$?`), before anything
+clobbers it. **Key constraint:** all scripts hard-guard on an interactive shell,
+so non-interactive/agent commands emit nothing (the arc's main agent finding).
+
 ## Open questions
-- Shell hook mechanics: how bash/zsh/fish inject the OSC 133 markers
-  (PROMPT_COMMAND, preexec, fish events) — and fish's missing-PS2 quirk that
-  Ghostty special-cases (`Terminal.zig:1829-1843`).
+- fish's missing-PS2 quirk that Ghostty special-cases (`Terminal.zig:1829-1843`).
+- `bash-preexec.sh` DEBUG-trap edge cases (subshells, PROMPT_COMMAND sharing).
 
 ## Sources
 - `projects/ghostty/src/terminal/osc/parsers/semantic_prompt.zig`

@@ -84,6 +84,36 @@ getting. **Opportunity:** expose cwd *with* provenance + confidence (e.g.
 `{path, source: shell|os, at_prompt: bool, remote: bool}`) instead of one string
 — cheap to add (the terminal already computes all of it) and directly useful.
 
+## Finding #3 — the markers require an interactive human prompt (agent commands are invisible)
+
+**Evidence:** `../experiments/006-shell-emitters/`. The OSC 133 / OSC 7 signals
+that Findings #1 and #2 are about don't originate in the terminal — the shell
+emits them, via the integration scripts each terminal ships. Every one of those
+scripts (Ghostty, Kitty, WezTerm × bash/zsh/fish) does two things:
+
+1. **hard-guards on an interactive shell** — `ghostty.bash:19`, `kitty.bash:3`,
+   `wezterm.sh:27`, and the zsh/fish equivalents; and
+2. **binds every marker to a prompt hook** — `precmd`/`PROMPT_COMMAND` (A, D,
+   OSC 7), `preexec`/`PS0` (C).
+
+**The consequence:** a command run non-interactively — `bash -c "…"`, or an agent
+spawning a shell without an interactive prompt — fires **zero** markers. No
+prompt cycle, nothing emitted.
+
+### Why this reframes Findings #1 and #2
+Those findings were about the terminal not *retaining* structure. This is deeper:
+for agent-run commands the structure is **never produced**. The entire
+command-boundary + cwd apparatus is downstream of a human typing at a prompt;
+remove the prompt and the terminal sees the same undifferentiated byte stream a
+coding agent sees today.
+
+**Opportunity:** the gap is *production*, not just retention. An agent-native
+design would either (a) emit command structure for **non-interactive /
+programmatic** execution (a marker protocol that doesn't depend on a prompt
+cycle), or (b) let the agent **drive terminal state directly** rather than
+depending on shell prompt hooks. See `../ideas/structured-terminal.md` and
+`../ideas/terminal-protocol.md`.
+
 ## Notes
 - Closest existing surface today: WezTerm's Lua `get_semantic_zones` /
   `get_text_from_semantic_zone` and Kitty's `@ get-text` output selectors — but

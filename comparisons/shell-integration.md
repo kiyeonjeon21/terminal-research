@@ -31,10 +31,13 @@ whether to trust the shell's OSC 7 escape or read the OS process cwd.**
 
 Spectrum, most→least trusting of the shell: **Ghostty → WezTerm → Kitty → tmux.**
 
-### Other shell-integration surface (TBD)
-| Project | Provided shell scripts |
-| ------- | ---------------------- |
-| Ghostty | _TBD_ |
-| WezTerm | _TBD_ |
-| Kitty   | _TBD_ |
-| tmux    | _TBD_ |
+### Provided shell-integration scripts (the emitter side)
+Verified in `../experiments/006-shell-emitters/`. **All emitters hard-guard on an
+interactive shell — a non-interactive/agent command emits no markers.**
+
+| Project | Shells shipped | bash preexec | Notable |
+| ------- | -------------- | ------------ | ------- |
+| Ghostty | bash, zsh, fish, elvish | bash-preexec only on bash < 4.4 (`ghostty.bash:266`) | A via printf + B in PS1; fish alone percent-encodes OSC 7 |
+| Kitty   | bash, zsh, fish | none — PS0-based (`kitty.bash:230`) | `D;$?`+`A` combined in PS1; zsh omits B; feature flags via `KITTY_SHELL_INTEGRATION` |
+| WezTerm | bash, zsh (one `wezterm.sh`) | **bundled verbatim** (`wezterm.sh:41-424`) | adds OSC 1337 `SetUserVar=WEZTERM_PROG`; no fish |
+| tmux    | none (consumer only) | — | relies on the outer terminal's integration |

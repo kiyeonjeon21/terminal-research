@@ -34,6 +34,15 @@ durable OSC-133 records feature and reverted it** (`6fd9987`) — so the gap is 
 deliberately-un-landed capability, not an accident. A from-scratch agent-native
 terminal can own that structure by design instead of retrofitting it.
 
+**And the structure isn't just unretained — for agents it's unemitted.**
+`../experiments/006-shell-emitters/` showed the OSC 133 markers come from the
+shell's integration scripts, which all hard-guard on an interactive shell and
+fire only from prompt hooks. A command an agent runs non-interactively
+(`bash -c`) emits nothing at all. So depending on shell-emitted markers is a dead
+end for agent commands twice over: not produced, and not retained. This is the
+core argument for the *terminal* (or a terminal-driven API) owning command
+structure rather than inheriting it from a human's prompt cycle.
+
 ## Open questions
 - What is the right retention window / eviction policy for a command store
   (unbounded history vs. ring buffer vs. tied to scrollback)?
