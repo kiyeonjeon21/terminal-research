@@ -104,19 +104,28 @@ zero. The pieces exist, uncombined:
 The whole value-add is putting the structure every terminal already computes onto
 a channel an agent can actually use.
 
-## Scope — what this study deliberately did not cover
+## Scope — the agent conclusion vs. the breadth study
 
-These are separate axes (design-space breadth, weaker agent relevance), left as
-future work, not gaps in the above conclusion:
+The thesis above is about the **agent axis**. Separately, the technical-core axes
+(design-space breadth, weaker agent relevance) were studied for general terminal
+understanding — see the `comparisons/` docs, now filled:
 
-- **Rendering** — GPU pipeline, glyph atlas/shaping, damage tracking
-  (`comparisons/rendering.md`, stub).
-- **Parser** — VT/ANSI/OSC state-machine design (`comparisons/parser.md`, stub) —
-  the natural home for any new agent-native escape sequence.
-- **Multiplexing / session model**, **input/keyboard protocols**, **graphics
-  protocols** — untouched.
+- **Parser** (`comparisons/parser.md`) — 3 of 4 implement the Paul Williams vt500
+  state machine; the natural home for any new agent-native escape sequence.
+- **Rendering** (`comparisons/rendering.md`) — GPU rasterizers vs tmux writing
+  escapes to an outer tty; glyph atlas, shaping, damage tracking.
+- **Architecture** (`comparisons/architecture.md`) — how the pieces compose; the
+  multiplexer split drives the rest.
+- **Multiplexing / session model** (`comparisons/multiplexing.md`) — server-owns-
+  PTYs persistence (tmux, WezTerm mux) vs GUI-with-tabs (Kitty, Ghostty).
+- **Input / keyboard** (`comparisons/input.md`) — legacy ambiguity → the Kitty
+  keyboard protocol; mouse/paste/focus modes.
+- **Graphics** (`comparisons/graphics.md`) — Kitty graphics vs Sixel vs iTerm2.
+
+Still genuinely untouched (future):
 - **Empirically driving the control APIs** (`kitty @`, `wezterm cli`, `tmux -CC`)
-  in a PTY harness like exp 003 — the natural next hands-on experiment.
+  in a PTY harness like exp 003.
+- **experiment 004 (pty-tracing)** — tracing PTY bytes with a live tool.
 
 ## Method & reproducibility
 

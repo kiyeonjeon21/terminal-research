@@ -23,6 +23,18 @@ prompt cycle — so for a coding agent it does not exist.* The four findings
 3. Markers require an interactive prompt — agent commands emit nothing (proven on the wire). _(exp [006](experiments/006-shell-emitters/), [003](experiments/003-osc133/))_
 4. A control API exists (Kitty RPC / tmux push / WezTerm cli+Lua) but none exposes a command's exit code. _(exp [007](experiments/007-control-api/))_
 
+## Comparison studies (breadth)
+
+Cross-terminal technical comparisons, beyond the agent axis — general terminal
+understanding:
+
+- [parser](comparisons/parser.md) · [rendering](comparisons/rendering.md) · [architecture](comparisons/architecture.md)
+- [multiplexing](comparisons/multiplexing.md) · [input/keyboard](comparisons/input.md) · [graphics](comparisons/graphics.md)
+- [shell-integration](comparisons/shell-integration.md) · [extensibility](comparisons/extensibility.md) · [agent-opportunities](comparisons/agent-opportunities.md)
+
+Background reference in [notes/](notes/) (pty, ansi, vt100, osc, rendering,
+shell-integration, input, multiplexing, graphics).
+
 ## Projects
 
 Local clones under `projects/` (gitignored, kept unmodified):
