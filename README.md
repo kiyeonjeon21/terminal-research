@@ -13,7 +13,7 @@ A personal research repository for studying modern terminal emulators and explor
 
 **→ [SYNTHESIS.md](SYNTHESIS.md) — the research conclusion.**
 
-Seven experiments across two axes converge on one thesis: *terminals compute
+Nine experiments across two axes converge on one thesis: *terminals compute
 command structure but never keep it, and get it only from an interactive human's
 prompt cycle — so for a coding agent it does not exist.* The four findings
 (detailed in [comparisons/agent-opportunities.md](comparisons/agent-opportunities.md)):
@@ -34,6 +34,24 @@ understanding:
 
 Background reference in [notes/](notes/) (pty, ansi, vt100, osc, rendering,
 shell-integration, input, multiplexing, graphics).
+
+## Experiments
+
+Small, reproducible probes ([full index](experiments/)):
+
+| # | Question |
+| - | -------- |
+| [001](experiments/001-command-boundary/) | Command boundaries in Ghostty |
+| [002](experiments/002-command-model/) | Command model across WezTerm/Kitty/tmux |
+| [003](experiments/003-osc133/) | OSC 133 hands-on — markers are interactive-only *(PTY capture)* |
+| [004](experiments/004-pty-tracing/) | Tracing PTY traffic — echo/escapes/resize *(PTY capture)* |
+| [005](experiments/005-cwd-tracking/) | cwd tracking — OSC 7 vs process inspection |
+| [006](experiments/006-shell-emitters/) | Shell-integration emitters (the interactivity gap) |
+| [007](experiments/007-control-api/) | Control-API surface across the four *(source)* |
+| [008](experiments/008-control-api-live/) | Driving a control API live — tmux control mode *(live capture)* |
+| [009](experiments/009-raw-mode-tui/) | Raw-mode TUI capture — vim/less *(live capture)* |
+
+Empirical probes (003, 004, 008, 009) ship a `harness.py` — run `python3 harness.py`.
 
 ## Projects
 

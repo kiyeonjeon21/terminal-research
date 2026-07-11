@@ -1,9 +1,12 @@
 # Synthesis — What terminals do with command structure, and where agents fall out
 
-> The conclusion of the shell-integration and control-API investigation
-> (experiments 001–007). Every claim traces to a cited experiment; those cite
-> source `file:line` in the four studied terminals (Ghostty, WezTerm, Kitty,
-> tmux). Facts vs. interpretation are kept separate throughout.
+> The conclusion of the **agent axis** — the shell-integration and control-API
+> investigation (experiments 001–003, 005–008). Every claim traces to a cited
+> experiment; those cite source `file:line` in the four studied terminals
+> (Ghostty, WezTerm, Kitty, tmux). Facts vs. interpretation are kept separate.
+> (The general terminal-mechanics *breadth* study — parser, rendering,
+> multiplexing, input, graphics, + exp 004/009 — lives in `comparisons/` and
+> `notes/`; it is summarized under Scope below, not re-argued here.)
 
 ## Thesis
 
@@ -31,6 +34,7 @@ Two axes, seven experiments:
 
 **Control-API axis — what a program can drive:**
 - [007](experiments/007-control-api/) — Ghostty ≈ none; Kitty RPC (pull); WezTerm cli/Lua/codec (hybrid); tmux control mode (push).
+- [008](experiments/008-control-api-live/) — empirical: driving tmux control mode live confirms the `%output` push model — and the missing exit-code — on the wire.
 
 ## The four findings
 
@@ -143,5 +147,7 @@ resize.)
 Source reading over docs; execution paths traced, not files summarized; exact
 `file:line` citations; facts separated from assumptions (per
 [AGENTS.md](AGENTS.md)). Cloned projects under `projects/` are kept unmodified
-(gitignored). The one empirical experiment ([003](experiments/003-osc133/)) ships
-a `harness.py` — reproduce with `python3 harness.py`.
+(gitignored). Four experiments ([003](experiments/003-osc133/),
+[004](experiments/004-pty-tracing/), [008](experiments/008-control-api-live/),
+[009](experiments/009-raw-mode-tui/)) are empirical and ship a `harness.py` —
+reproduce with `python3 harness.py`.
