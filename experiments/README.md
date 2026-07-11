@@ -17,3 +17,4 @@ One folder per experiment, numbered `NNN-short-slug/`, containing:
 | 002 | Do other terminals keep durable command records? (WezTerm/Kitty/tmux) | done |
 | 003 | How is OSC 133 emitted and consumed? | todo |
 | 004 | How can PTY traffic be traced? | todo |
+| 005 | How does each terminal track cwd? (OSC 7 vs process inspection) | done |

@@ -42,8 +42,13 @@ never joined to output. Full trace + citations:
 `../experiments/001-command-boundary/`, `../experiments/002-command-model/`,
 synthesis in `../comparisons/agent-opportunities.md`.
 
+### OSC 7 (cwd reporting)
+Traced in `../experiments/005-cwd-tracking/`. All four terminals parse OSC 7 but
+diverge on trusting it vs. reading the OS process cwd — spectrum
+**Ghostty (shell-only) → WezTerm → Kitty → tmux (process-only)**. iTerm2 OSC 1337
+`CurrentDir` is an alternate carrier (Ghostty honors it; WezTerm ignores it).
+
 ## Open questions
-- OSC 7 (cwd) — how each terminal parses/stores it. Not yet traced.
 - Shell hook mechanics: how bash/zsh/fish inject the OSC 133 markers
   (PROMPT_COMMAND, preexec, fish events) — and fish's missing-PS2 quirk that
   Ghostty special-cases (`Terminal.zig:1829-1843`).

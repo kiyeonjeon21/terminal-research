@@ -57,6 +57,33 @@ developed in:
   structured events instead of a byte stream.
 - `../ideas/terminal-protocol.md` — a protocol/query API over that state.
 
+## Finding #2 — "cwd" is not one fact; each terminal collapses its provenance
+
+**Evidence:** `../experiments/005-cwd-tracking/`. All four terminals parse OSC 7,
+but disagree on whether to trust it — a spectrum from shell-trusting to
+OS-trusting:
+
+| Terminal | Authoritative cwd source | Process-cwd fallback |
+| --- | --- | --- |
+| Ghostty | shell escape only (OSC 7 / OSC 1337) | no |
+| WezTerm | OSC 7 primary, else process | yes (`localpane.rs:1061`) |
+| Kitty | process default; OSC 7 only at prompt & not remote (`window.py:166`) | yes |
+| tmux | OS process inspection only (`osdep_get_cwd`) | yes (authoritative) |
+
+**The pattern:** cwd has **provenance** (shell-reported vs OS-observed) and
+**confidence** (at-prompt vs mid-command; local vs remote) — Kitty's gating logic
+is precisely an attempt to reason about that confidence. Yet every terminal
+exposes cwd as a single lossy string and picks a different policy for resolving
+it.
+
+### Why it matters for coding agents
+An agent needs a *reliable* cwd, and each policy fails differently: OSC 7 needs
+shell integration and is stale mid-command; process inspection races on the
+foreground process and can't see through ssh. An agent can't tell which it's
+getting. **Opportunity:** expose cwd *with* provenance + confidence (e.g.
+`{path, source: shell|os, at_prompt: bool, remote: bool}`) instead of one string
+— cheap to add (the terminal already computes all of it) and directly useful.
+
 ## Notes
 - Closest existing surface today: WezTerm's Lua `get_semantic_zones` /
   `get_text_from_semantic_zone` and Kitty's `@ get-text` output selectors — but

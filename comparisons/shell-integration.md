@@ -18,10 +18,23 @@ queryable command record.**
 | Kitty   | A/C set line tag; D → Python | 2-bit per-line `prompt_kind` (`line.h:84`) | transient scalar `last_cmd_exit_status` (`window.py:260`) |
 | tmux    | **A/C only** (no B/D) | 2 line-flag bits (`tmux.h:805-806`) | **not handled**; richer version reverted (`6fd9987`) |
 
+### cwd tracking (OSC 7 vs OS process inspection)
+Verified in `../experiments/005-cwd-tracking/`. **The terminals diverge on
+whether to trust the shell's OSC 7 escape or read the OS process cwd.**
+
+| Project | Parses OSC 7 | Authoritative cwd source | Process-cwd fallback |
+| ------- | ------------ | ------------------------ | -------------------- |
+| Ghostty | yes → `setPwd` (`osc.zig:799`) | **shell escape only** (OSC 7 / iTerm2 1337 + spawn seed) | **no** |
+| WezTerm | yes → `current_dir: Url` (`performer.rs:936`) | OSC 7 primary, else process | yes (`localpane.rs:1061`) |
+| Kitty   | yes → `last_reported_cwd` (`screen.c:3250`) | **process default**; OSC 7 only *at prompt* & not remote (`window.py:166`) | yes (`/proc`, macOS, `pwdx`) |
+| tmux    | yes → display-only `#{pane_path}` (`input.c:2711`) | **process only** (`osdep_get_cwd`, `format.c:965`) | yes (authoritative) |
+
+Spectrum, most→least trusting of the shell: **Ghostty → WezTerm → Kitty → tmux.**
+
 ### Other shell-integration surface (TBD)
-| Project | OSC 7 (cwd) | Provided shell scripts |
-| ------- | ----------- | ---------------------- |
-| Ghostty | _TBD_ | _TBD_ |
-| WezTerm | _TBD_ | _TBD_ |
-| Kitty   | _TBD_ | _TBD_ |
-| tmux    | _TBD_ | _TBD_ |
+| Project | Provided shell scripts |
+| ------- | ---------------------- |
+| Ghostty | _TBD_ |
+| WezTerm | _TBD_ |
+| Kitty   | _TBD_ |
+| tmux    | _TBD_ |
