@@ -19,3 +19,4 @@ One folder per experiment, numbered `NNN-short-slug/`, containing:
 | 004 | How can PTY traffic be traced? | todo |
 | 005 | How does each terminal track cwd? (OSC 7 vs process inspection) | done |
 | 006 | How do shell-integration scripts *emit* the markers? (interactivity gap) | done |
+| 007 | Is there a control API an agent can drive? (control-API axis) | done |

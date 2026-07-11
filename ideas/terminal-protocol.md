@@ -29,6 +29,24 @@ stable schema over retained command state — plus an event/subscription channel
 (`command.start` / `command.end`) so an agent can await completion instead of
 polling. See `structured-terminal.md`.
 
+**The full control-surface survey (`../experiments/007-control-api/`) shows the
+design pieces already exist, just not combined:**
+- **Transport & model** — the pull-vs-push choice is live in the wild. Kitty is
+  request/response (poll); **tmux control mode (`-CC`) already *pushes* a
+  `%output` stream + structural `%…` events** to an external controller — the
+  nearest thing to the event bus this idea wants. A protocol should push, like
+  tmux, not force polling like Kitty.
+- **Schema & security** — Kitty's remote control has a machine-readable command
+  schema (auto-generates a Go client) and the best security model
+  (per-command password scoping, AES-GCM, replay guard). That's the template for
+  the "typed, stable, gated" part.
+- **What's still missing everywhere** — none of the four surfaces exposes a
+  command's **exit code**, and command *output* is only reachable by
+  reconstruction (Kitty `last_cmd_output`, tmux raw `%output` bytes, WezTerm Lua
+  zones). The protocol's whole value-add is putting the retained
+  `command→output→exit-code` record (from `structured-terminal.md`) onto a
+  tmux-style push channel with Kitty-style schema/security.
+
 ## Open questions
 - Transport: extend an existing IPC (WezTerm mux, Kitty remote control) or a new
   local socket? What does a headless/remote agent need?

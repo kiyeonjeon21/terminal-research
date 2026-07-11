@@ -120,6 +120,40 @@ cycle), or (b) let the agent **drive terminal state directly** rather than
 depending on shell prompt hooks. See `../ideas/structured-terminal.md` and
 `../ideas/terminal-protocol.md`.
 
+## Finding #4 — a control surface exists, but it's a patchwork that still withholds the command record
+
+**Evidence:** `../experiments/007-control-api/` (see also
+`extensibility.md`). Findings #1–#3 were about what terminals *don't* do with
+command structure. This asks the complementary question: **is there an API an
+agent can drive today?** Answer — yes for three of four, but fragmented:
+
+| Terminal | Control surface | Model |
+| --- | --- | --- |
+| Ghostty | 2 IPC actions (open window) | fire-and-forget — effectively none |
+| Kitty | `kitty @` RPC (send-text, run, get-text `last_cmd_output`, ls) | request/response, **poll** |
+| WezTerm | `cli` + Lua + codec protocol | hybrid (Lua has the zones + events) |
+| tmux | control mode `-CC`, `%output` firehose | **push / event-stream** |
+
+Two things stand out:
+1. **Interaction model splits pull vs push.** tmux's `%output` stream — every
+   pane byte + structural events pushed to an external controller — is the
+   **closest thing to an agent-native event bus that already ships**. Kitty adds
+   the opposite strengths: a machine-readable command schema and a real security
+   model (per-command password scoping, AES-GCM).
+2. **The exit-code gap reappears.** Output is reachable (Kitty `last_cmd_output`
+   cleanest; tmux raw bytes you re-parse; WezTerm Lua-only), but **no API exposes
+   a command's exit code** — Kitty tracks it and omits it from `get-text`, tmux
+   and WezTerm discard it. Same structural gap as Findings #1–#3, now confirmed
+   from the API direction.
+
+### Why it matters
+An agent-native terminal isn't starting from zero — Kitty's RPC, tmux's `%output`
+push, and WezTerm's cli/Lua are concrete prior art. The missing piece is narrow:
+a **uniform, structured, event-driven** surface that pushes
+`command.start / command.output / command.end{exit_code}` — tmux's push model +
+Kitty's schema/security + the OSC-133 structure everyone computes but no API
+fully exposes. See `../ideas/terminal-protocol.md`.
+
 ## Notes
 - Closest existing surface today: WezTerm's Lua `get_semantic_zones` /
   `get_text_from_semantic_zone` and Kitty's `@ get-text` output selectors — but
