@@ -11,7 +11,9 @@ A personal research repository for studying modern terminal emulators and explor
 
 ## Findings
 
-**→ [SYNTHESIS.md](SYNTHESIS.md) — the research conclusion.**
+**→ [SYNTHESIS.md](SYNTHESIS.md) — the full synthesis** (Part I: the agent
+thesis + four findings; Part II: how terminals work — parser, rendering, PTY,
+multiplexing, input, graphics; plus a portrait of each terminal).
 
 Nine experiments across two axes converge on one thesis: *terminals compute
 command structure but never keep it, and get it only from an interactive human's
