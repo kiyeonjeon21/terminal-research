@@ -7,3 +7,6 @@ projects/*/
 *.swp
 .idea/
 .vscode/
+
+# Local Claude Code config
+.claude/
