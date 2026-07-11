@@ -1,0 +1,44 @@
+Experiment 004 — PTY traffic traces (control chars escaped)
+Regenerate with: python3 harness.py
+========================================================================
+
+A — cooked mode: line-discipline ECHO (run `cat`, send 'hello')
+------------------------------------------------------------------------
+  [IN  → child (we wrote)] hello\n
+  [OUT ← child (read from master)] hello\r\nhello\r\n
+  [IN  → child (we wrote)] \x04
+  [OUT ← child (read from master)] ^D\x08\x08
+
+========================================================================
+
+B — ECHO off: `stty -echo; cat` → the echoed copy disappears
+------------------------------------------------------------------------
+  [IN  → child (we wrote)] hello\n
+  [OUT ← child (read from master)] hello\r\n
+  [IN  → child (we wrote)] \x04
+
+========================================================================
+
+C — escape sequences on the wire (OSC title + CSI SGR color)
+------------------------------------------------------------------------
+  [OUT ← child (read from master)] \e]0;MyTitle\a\e[1;31mBOLD-RED\e[0m\r\n
+
+========================================================================
+
+D — termios flags on a fresh PTY slave (cooked/canonical by default)
+------------------------------------------------------------------------
+  ICANON (line buffering) : on 
+  ECHO   (echo input)     : on 
+  ISIG   (Ctrl-C→SIGINT)  : on 
+  ICRNL  (CR→NL on input) : on 
+  OPOST  (output post-proc): on 
+  IUTF8  (UTF-8 input)    : n/a
+
+========================================================================
+
+E — resize: TIOCSWINSZ 24x80 → 30x100 mid-run raises SIGWINCH
+------------------------------------------------------------------------
+  [OUT ← child (read from master)] READY at 24 80\r\n
+  [OUT ← child (read from master)] WINCH now 30 100\r\nDONE\r\n
+
+========================================================================

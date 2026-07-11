@@ -124,8 +124,12 @@ understanding — see the `comparisons/` docs, now filled:
 
 Still genuinely untouched (future):
 - **Empirically driving the control APIs** (`kitty @`, `wezterm cli`, `tmux -CC`)
-  in a PTY harness like exp 003.
-- **experiment 004 (pty-tracing)** — tracing PTY bytes with a live tool.
+  in a PTY harness like exp 003/004.
+- Raw-mode capture of a real TUI (vim/htop) — full-screen escape + input traffic.
+
+(experiment [004](experiments/004-pty-tracing/) now empirically traces PTY
+traffic — echo/line-discipline, escape sequences on the wire, and
+`TIOCSWINSZ`→SIGWINCH resize.)
 
 ## Method & reproducibility
 

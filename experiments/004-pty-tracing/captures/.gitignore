@@ -1,0 +1,5 @@
+# Regenerable per-scenario captures (produced by ../harness.py).
+# Keep only the bundled transcript under version control.
+*
+!.gitignore
+!RESULTS.txt
