@@ -1,0 +1,35 @@
+Experiment 009 — raw-mode TUI capture
+Regenerate with: python3 harness.py
+========================================================================
+
+A — vim (raw mode + alternate screen)
+------------------------------------------------------------------------
+  bytes captured: 2395
+  raw mode while running:  ICANON off | ECHO off | ISIG off   (exp 004 cooked default: all on)
+  DEC private modes on the wire:
+    \e[?1049h   enable  alternate screen buffer
+    \e[?1h   enable  app cursor keys (DECCKM)
+    \e[?2004h   enable  bracketed paste
+    \e[?1004h   enable  focus reporting
+    \e[?12h   enable  cursor blink
+    \e[?12l   disable cursor blink
+    \e[?25l   disable cursor visible (DECTCEM)
+    \e[?25h   enable  cursor visible (DECTCEM)
+    \e[?2004l   disable bracketed paste
+    \e[?1004l   disable focus reporting
+    \e[?1l   disable app cursor keys (DECCKM)
+    \e[?1049l   disable alternate screen buffer
+  alternate screen used (?1049): True
+
+========================================================================
+
+B — less (pager: raw mode + alternate screen)
+------------------------------------------------------------------------
+  bytes captured: 316
+  raw mode while running:  ICANON off | ECHO off | ISIG on    (exp 004 cooked default: all on)
+  DEC private modes on the wire:
+    \e[?1049h   enable  alternate screen buffer
+    \e[?1h   enable  app cursor keys (DECCKM)
+    \e[?1l   disable app cursor keys (DECCKM)
+    \e[?1049l   disable alternate screen buffer
+  alternate screen used (?1049): True

@@ -122,14 +122,21 @@ understanding — see the `comparisons/` docs, now filled:
   keyboard protocol; mouse/paste/focus modes.
 - **Graphics** (`comparisons/graphics.md`) — Kitty graphics vs Sixel vs iTerm2.
 
-Still genuinely untouched (future):
-- **Empirically driving the control APIs** (`kitty @`, `wezterm cli`, `tmux -CC`)
-  in a PTY harness like exp 003/004.
-- Raw-mode capture of a real TUI (vim/htop) — full-screen escape + input traffic.
+Empirical follow-ups, now done:
+- experiment [008](experiments/008-control-api-live/) — drives **tmux control
+  mode** live (the `%output` push stream), confirming exp 007 on the wire. (kitty
+  `@` needs a GUI; wezterm not installed — both source-verified in exp 007.)
+- experiment [009](experiments/009-raw-mode-tui/) — captures a real TUI (vim/less)
+  flipping the PTY to **raw mode** + the **alternate screen** + the DEC input
+  modes, mirroring exp 004's cooked default.
 
-(experiment [004](experiments/004-pty-tracing/) now empirically traces PTY
-traffic — echo/line-discipline, escape sequences on the wire, and
-`TIOCSWINSZ`→SIGWINCH resize.)
+Remaining nice-to-haves: capturing a live SGR **mouse** report and the **Kitty
+keyboard protocol** handshake; driving kitty `@` / wezterm `cli` on a machine that
+has them running.
+
+(experiment [004](experiments/004-pty-tracing/) empirically traces PTY traffic —
+echo/line-discipline, escape sequences on the wire, and `TIOCSWINSZ`→SIGWINCH
+resize.)
 
 ## Method & reproducibility
 

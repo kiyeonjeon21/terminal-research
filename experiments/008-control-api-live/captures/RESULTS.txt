@@ -1,0 +1,65 @@
+Experiment 008 — tmux control mode (`tmux -C`) live protocol capture
+Regenerate with: python3 harness.py   (uses private socket, kills it after)
+========================================================================
+
+%begin 1783787074 286 0\r\n
+%end 1783787074 286 0\r\n
+%window-add @0\r\n
+%sessions-changed\r\n
+%session-changed $0 0\r\n
+%window-renamed @0 zsh\r\n
+%output %0 sh-3.2$ \r\n
+send-keys 'echo hello-from-agent' Enter\r\n
+%window-renamed @0 bash\r\n
+%begin 1783787076 294 1\r\n
+%end 1783787076 294 1\r\n
+%output %0 ech\r\n
+%output %0 o hel\r\n
+%output %0 lo-from-agent\015\012\r\n
+%output %0 hello-from-agent\015\012\r\n
+%output %0 sh-3.2$ \r\n
+capture-pane -p\r\n
+%begin 1783787077 295 1\r\n
+sh-3.2$ echo hello-from-agent\r\n
+hello-from-agent\r\n
+sh-3.2$\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+\r\n
+%end 1783787077 295 1\r\n
+new-window -n second\r\n
+%begin 1783787077 296 1\r\n
+%end 1783787077 296 1\r\n
+%session-window-changed $0 @1\r\n
+%window-add @1\r\n
+list-windows -F '#{window_id} #{window_name}'\r\n
+%begin 1783787078 299 1\r\n
+@0 bash\r\n
+@1 second\r\n
+%end 1783787078 299 1\r\n
+%output %1 \033[1m\033[3m%\033[23m\033[1m\033[0m                                                                               \015 \015\r\n
+%output %1 \015\033[0m\033[23m\033[24m\033[J\033[36m008-control-api-live\033[39m % \033[K\033[?2004h\r\n
+kill-server\r\n
+%begin 1783787079 300 1\r\n
+%end 1783787079 300 1\r\n
+%sessions-changed\r\n
+%exit\r\n
+

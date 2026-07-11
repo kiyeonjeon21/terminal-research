@@ -1,0 +1,5 @@
+# Regenerable raw captures (produced by ../harness.py).
+# Keep only the readable transcript under version control.
+*
+!.gitignore
+!RESULTS.txt
