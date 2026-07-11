@@ -89,6 +89,10 @@ The whole value-add is putting the structure every terminal already computes ont
 a channel an agent can use. Experiment 008 shows the transport half (tmux
 `%output`) already ships; the missing piece is the semantic layer.
 
+The full design frame — including the dual human/agent model, safety/provenance,
+persistence, and what to inherit vs invent — is worked out in
+[ideas/ai-native-terminal.md](ideas/ai-native-terminal.md).
+
 ---
 
 # Part II — How terminals work (the mechanics)
