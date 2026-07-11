@@ -1,0 +1,9 @@
+# Cloned upstream projects — kept locally, not committed to this research repo.
+# Track them with your own notes/experiments instead of vendoring the source.
+projects/*/
+
+# OS / editor noise
+.DS_Store
+*.swp
+.idea/
+.vscode/
