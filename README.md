@@ -9,13 +9,25 @@ A personal research repository for studying modern terminal emulators and explor
 - Learn by reading source code and running experiments.
 - Explore ideas for agent-native developer tooling.
 
+## Findings
+
+**→ [SYNTHESIS.md](SYNTHESIS.md) — the research conclusion.**
+
+Seven experiments across two axes converge on one thesis: *terminals compute
+command structure but never keep it, and get it only from an interactive human's
+prompt cycle — so for a coding agent it does not exist.* The four findings
+(detailed in [comparisons/agent-opportunities.md](comparisons/agent-opportunities.md)):
+
+1. No terminal keeps a durable command record — just a ≤2-bit grid tag. _(exp [001](experiments/001-command-boundary/), [002](experiments/002-command-model/))_
+2. "cwd" is lossy — shell-escape vs OS-process, four different policies. _(exp [005](experiments/005-cwd-tracking/))_
+3. Markers require an interactive prompt — agent commands emit nothing (proven on the wire). _(exp [006](experiments/006-shell-emitters/), [003](experiments/003-osc133/))_
+4. A control API exists (Kitty RPC / tmux push / WezTerm cli+Lua) but none exposes a command's exit code. _(exp [007](experiments/007-control-api/))_
+
 ## Projects
 
-- Ghostty
-- WezTerm
-- tmux
-- Kitty
-- VS Code Terminal
+Local clones under `projects/` (gitignored, kept unmodified):
+
+- Ghostty · WezTerm · Kitty · tmux
 
 ## Research Areas
 
