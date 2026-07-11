@@ -1,0 +1,59 @@
+Experiment 003 — captured PTY byte streams (control chars escaped)
+Regenerate with: python3 harness.py
+========================================================================
+
+A — bash 5.3 INTERACTIVE + minimal integration (expect markers)
+  file: captures/A_bash_interactive_mini.bin   (389 bytes)
+------------------------------------------------------------------------
+echo hello\r\n
+exit\r\n
+\e]133;D;0\a\e]7;file://Kiyeons-MacBook-Air.local/Users/kiyeonjeon/dev/personal/projects/terminal-research/experiments/003-osc133\a\e]133;A\a\e[?2004h$ \e]133;B\aecho hello\r\n
+\e[?2004l\r\e]133;C\ahello\r\n
+\e]133;D;0\a\e]7;file://Kiyeons-MacBook-Air.local/Users/kiyeonjeon/dev/personal/projects/terminal-research/experiments/003-osc133\a\e]133;A\a\e[?2004h$ \e]133;B\aexit\r\n
+\e[?2004l\r\e]133;C\aexit\r\n
+
+
+========================================================================
+
+B — bash 5.3 NON-INTERACTIVE `bash -c` (expect NONE)
+  file: captures/B_bash_noninteractive_mini.bin   (7 bytes)
+------------------------------------------------------------------------
+hello\r\n
+
+
+========================================================================
+
+C2 — the REAL kitty.bash, INTERACTIVE (real markers)
+  file: captures/C2_real_kitty_interactive.bin   (878 bytes)
+------------------------------------------------------------------------
+echo hello\r\n
+exit\r\n
+\e]7;kitty-shell-cwd://Kiyeons-MacBook-Air.local/Users/kiyeonjeon/dev/personal/projects/terminal-research/experiments/003-osc133\a\e[?2004h\e]133;k;start_kitty\a\e]133;D;0\a\e]133;A\a\e]133;k;end_kitty\abash-5.3$ \e]133;k;start_suffix_kitty\a\e[5 q\e]2;~/dev/personal/projects/terminal-research/experiments/003-osc133\a\e]133;k;end_suffix_kitty\aecho hello\r\n
+\e[?2004l\r\e]2;echo hello\a\e]133;C;cmdline=echo\ hello\a\x01\e]133;k;start_kitty\a\x02\x01\e]133;k;end_kitty\a\x02\x01\e]133;k;start_suffix_kitty\a\x02\x01\e[0 q\x02\x01\e]133;k;end_suffix_kitty\a\x02hello\r\n
+\e[?2004h\e]133;k;start_kitty\a\e]133;D;0\a\e]133;A\a\e]133;k;end_kitty\abash-5.3$ \e]133;k;start_suffix_kitty\a\e[5 q\e]2;~/dev/personal/projects/terminal-research/experiments/003-osc133\a\e]133;k;end_suffix_kitty\aexit\r\n
+\e[?2004l\r\e]2;exit\a\e]133;C;cmdline=exit\a\x01\e]133;k;start_kitty\a\x02\x01\e]133;k;end_kitty\a\x02\x01\e]133;k;start_suffix_kitty\a\x02\x01\e[0 q\x02\x01\e]133;k;end_suffix_kitty\a\x02exit\r\n
+
+
+========================================================================
+
+D — zsh 5.9 INTERACTIVE + minimal integration (cross-shell)
+  file: captures/D_zsh_interactive_mini.bin   (637 bytes)
+------------------------------------------------------------------------
+echo hello\r\n
+exit\r\n
+\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                               \r \r\e]133;D;0\a\e]7;file://Kiyeons-MacBook-Air.local/Users/kiyeonjeon/dev/personal/projects/terminal-research/experiments/003-osc133\a\e]133;A\a\r\e[0m\e[27m\e[24m\e[J$ \e]133;B\a\e[K\e[?2004he\x08echo hello\e[?2004l\r\r\n
+\e]133;C\ahello\r\n
+\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                               \r \r\e]133;D;0\a\e]7;file://Kiyeons-MacBook-Air.local/Users/kiyeonjeon/dev/personal/projects/terminal-research/experiments/003-osc133\a\e]133;A\a\r\e[0m\e[27m\e[24m\e[J$ \e]133;B\a\e[K\e[?2004he\x08exit\e[?2004l\r\r\n
+\e]133;C\a
+
+========================================================================
+
+C — real kitty.bash sourced NON-INTERACTIVELY (guard trips):
+HOOKS=[]\r\n
+NO_HOOKS_INSTALLED\r\n
+
+
+C — real ghostty.bash sourced NON-INTERACTIVELY (guard trips):
+HOOKS=[]\r\n
+NO_HOOKS_INSTALLED\r\n
+

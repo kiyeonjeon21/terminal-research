@@ -1,0 +1,5 @@
+# Regenerable capture artifacts (produced by ../harness.py).
+# Keep only the human-readable transcript under version control.
+*
+!.gitignore
+!RESULTS.txt

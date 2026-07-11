@@ -100,6 +100,12 @@ scripts (Ghostty, Kitty, WezTerm × bash/zsh/fish) does two things:
 spawning a shell without an interactive prompt — fires **zero** markers. No
 prompt cycle, nothing emitted.
 
+**Empirically confirmed** in `../experiments/003-osc133/`: the same integration +
+same `echo hello`, captured off a real PTY, yields the full `D→A…B…C` marker
+cycle interactively but exactly `hello\r\n` (zero markers) under `bash -c`. The
+real `kitty.bash`/`ghostty.bash` guards trip identically when sourced
+non-interactively.
+
 ### Why this reframes Findings #1 and #2
 Those findings were about the terminal not *retaining* structure. This is deeper:
 for agent-run commands the structure is **never produced**. The entire
